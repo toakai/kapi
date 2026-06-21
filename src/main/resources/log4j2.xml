@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <!-- 控制台输出 -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%highlight{[%-5p]} %d{yyyy-MM-dd HH:mm:ss} [%t] [%c{1.}] - %m%n"/>
+        </Console>
+
+        <!-- 普通日志文件（每日滚动 + 保留60天） -->
+        <RollingFile name="File"
+                     fileName="./log/log.log"
+                     filePattern="./log/log_%d{yyyy-MM-dd HH}.log">
+            <PatternLayout>
+                <Pattern>[%-5p] %d{yyyy-MM-dd HH:mm:ss} [%t] [%c{1.}] - %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy max="60"/>
+        </RollingFile>
+
+        <!-- 错误日志专用文件 -->
+        <RollingFile name="ErrorFile"
+                     fileName="./log/error.log"
+                     filePattern="./log/error_%d{yyyy-MM-dd}.log">
+            <!-- 组合使用两个 ThresholdFilter 实现精确匹配 -->
+            <Filters>
+                <!-- 1.拒绝所有低于 ERROR 级别的日志 (DEBUG, INFO, WARN) -->
+                <ThresholdFilter level="ERROR" onMatch="NEUTRAL" onMismatch="DENY"/>
+                <!-- 2.对于 ERROR 及以上级别的日志，正常接受 -->
+                <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout>
+                <Pattern>[%-5p] %d{yyyy-MM-dd HH:mm:ss} [%t] [%c{1.}] - %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy max="60"/>
+        </RollingFile>
+
+        <!-- SQL日志专用文件（每日滚动 + 保留60天） -->
+        <RollingFile name="SqlFile"
+                     fileName="./log/sql.log"
+                     filePattern="./log/sql_%d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <Pattern>[%-5p] %d{yyyy-MM-dd HH:mm:ss} [%t] [%c{1.}] - %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy max="60"/>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <!-- SQL相关日志配置 - 输出到专用文件 -->
+        <!-- MyBatis SQL日志 -->
+        <Logger name="org.apache.ibatis" level="debug" additivity="false">
+            <AppenderRef ref="SqlFile"/>
+            <AppenderRef ref="Console"/> <!-- 同时在控制台显示 -->
+        </Logger>
+        <Logger name="org.mybatis" level="debug" additivity="false">
+            <AppenderRef ref="SqlFile"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <!-- JDBC驱动日志 -->
+        <Logger name="java.sql" level="debug" additivity="false">
+            <AppenderRef ref="SqlFile"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <!-- Spring JDBC日志 -->
+        <Logger name="org.springframework.jdbc" level="debug" additivity="false">
+            <AppenderRef ref="SqlFile"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <Logger name="net.p5w.dp.mapper" level="debug" additivity="false">
+            <AppenderRef ref="SqlFile"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <!-- 其他日志配置 -->
+        <Logger name="org.apache" level="info"/>
+        <Logger name="org.springframework" level="info"/>
+        <Logger name="net.p5w" level="debug"/>
+
+        <!-- 默认日志 - 不包含SQL日志（已被上面的Logger单独处理） -->
+        <Root level="debug">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+            <AppenderRef ref="ErrorFile"/>
+        </Root>
+    </Loggers>
+</Configuration>

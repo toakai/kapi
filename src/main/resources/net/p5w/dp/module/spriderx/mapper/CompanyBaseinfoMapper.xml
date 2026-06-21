@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.p5w.dp.module.spriderx.mapper.CompanyBaseinfoMapper">
+
+    <sql id="baseColumns">
+        id, pid, company_code, company_name, jurisdiction, platformName
+    </sql>
+
+    <sql id="queryWhere">
+        <where>
+            <if test="query.companyName != null and query.companyName != ''">
+                AND company_name LIKE CONCAT('%', #{query.companyName}, '%')
+            </if>
+            <if test="query.companyCode != null and query.companyCode != ''">
+                AND company_code = #{query.companyCode}
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectPage" resultType="net.p5w.dp.module.spriderx.entity.CompanyBaseinfo">
+        SELECT <include refid="baseColumns"/>
+        FROM tb_company_baseinfo
+        <include refid="queryWhere"/>
+        ORDER BY id DESC
+    </select>
+
+    <select id="selectById" resultType="net.p5w.dp.module.spriderx.entity.CompanyBaseinfo">
+        SELECT <include refid="baseColumns"/>
+        FROM tb_company_baseinfo
+        WHERE id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="net.p5w.dp.module.spriderx.entity.CompanyBaseinfo"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO tb_company_baseinfo (pid, company_code, company_name, jurisdiction, platformName)
+        VALUES (#{pid}, #{companyCode}, #{companyName}, #{jurisdiction}, #{platformName})
+    </insert>
+
+    <update id="updateById" parameterType="net.p5w.dp.module.spriderx.entity.CompanyBaseinfo">
+        UPDATE tb_company_baseinfo
+        <set>
+            <if test="pid != null">pid = #{pid},</if>
+            <if test="companyCode != null">company_code = #{companyCode},</if>
+            <if test="companyName != null">company_name = #{companyName},</if>
+            <if test="jurisdiction != null">jurisdiction = #{jurisdiction},</if>
+            <if test="platformName != null">platformName = #{platformName},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM tb_company_baseinfo WHERE id = #{id}
+    </delete>
+
+</mapper>

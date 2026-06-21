@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.p5w.dp.module.cpdb.mapper.TbPublic0007Mapper">
+
+    <sql id="baseColumns">
+        OB_SECID_0007, OB_SECCODE_0007, OB_SECNAME_0007,
+        F001V_0007, F016V_0007, F002V_0007, F003V_0007,
+        F005V_0007, F006V_0007, F007D_0007, F008D_0007,
+        F009N_0007, F012V_0007, F013V_0007, F014V_0007, F015V_0007,
+        F017V_0007, F018V_0007, OB_MEMO_0007, OB_MODTIME_0007,
+        OB_RECTIME_0007, OB_ISVALID_0007, OB_OBJECT_ID, OB_SEQ_ID,
+        F019N_0007, F020V_0007, F021V_0007, F022V_0007, F023C_0007,
+        F024V_0007, F025V_0007
+    </sql>
+
+    <sql id="queryWhere">
+        <where>
+            <if test="query.obSecname0007 != null and query.obSecname0007 != ''">
+                AND OB_SECNAME_0007 LIKE CONCAT('%', #{query.obSecname0007}, '%')
+            </if>
+            <if test="query.obSeccode0007 != null and query.obSeccode0007 != ''">
+                AND OB_SECCODE_0007 = #{query.obSeccode0007}
+            </if>
+            <if test="query.obIsvalid0007 != null and query.obIsvalid0007 != ''">
+                AND OB_ISVALID_0007 = #{query.obIsvalid0007}
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectPage" resultType="net.p5w.dp.module.cpdb.entity.TbPublic0007">
+        SELECT <include refid="baseColumns"/>
+        FROM tb_public_0007
+        <include refid="queryWhere"/>
+        ORDER BY OB_RECTIME_0007 DESC
+    </select>
+
+    <select id="selectByKey" resultType="net.p5w.dp.module.cpdb.entity.TbPublic0007">
+        SELECT <include refid="baseColumns"/>
+        FROM tb_public_0007
+        WHERE OB_SECID_0007 = #{obSecid0007}
+          AND OB_SECCODE_0007 = #{obSeccode0007}
+          AND F002V_0007 = #{f002v0007}
+          AND F005V_0007 = #{f005v0007}
+    </select>
+
+    <insert id="insert" parameterType="net.p5w.dp.module.cpdb.entity.TbPublic0007">
+        INSERT INTO tb_public_0007 (
+            OB_SECID_0007, OB_SECCODE_0007, OB_SECNAME_0007,
+            F001V_0007, F016V_0007, F002V_0007, F003V_0007,
+            F005V_0007, F006V_0007, F007D_0007, F008D_0007,
+            F009N_0007, F012V_0007, F013V_0007, F014V_0007, F015V_0007,
+            F017V_0007, F018V_0007, OB_MEMO_0007, OB_MODTIME_0007,
+            OB_RECTIME_0007, OB_ISVALID_0007, OB_OBJECT_ID, OB_SEQ_ID,
+            F019N_0007, F020V_0007, F021V_0007, F022V_0007, F023C_0007,
+            F024V_0007, F025V_0007
+        ) VALUES (
+            #{obSecid0007}, #{obSeccode0007}, #{obSecname0007},
+            #{f001v0007}, #{f016v0007}, #{f002v0007}, #{f003v0007},
+            #{f005v0007}, #{f006v0007}, #{f007d0007}, #{f008d0007},
+            #{f009n0007}, #{f012v0007}, #{f013v0007}, #{f014v0007}, #{f015v0007},
+            #{f017v0007}, #{f018v0007}, #{obMemo0007}, #{obModtime0007},
+            #{obRectime0007}, #{obIsvalid0007}, #{obObjectId}, #{obSeqId},
+            #{f019n0007}, #{f020v0007}, #{f021v0007}, #{f022v0007}, #{f023c0007},
+            #{f024v0007}, #{f025v0007}
+        )
+    </insert>
+
+    <update id="updateByKey" parameterType="net.p5w.dp.module.cpdb.entity.TbPublic0007">
+        UPDATE tb_public_0007
+        <set>
+            <if test="obSecname0007 != null">OB_SECNAME_0007 = #{obSecname0007},</if>
+            <if test="f001v0007 != null">F001V_0007 = #{f001v0007},</if>
+            <if test="f016v0007 != null">F016V_0007 = #{f016v0007},</if>
+            <if test="f003v0007 != null">F003V_0007 = #{f003v0007},</if>
+            <if test="f006v0007 != null">F006V_0007 = #{f006v0007},</if>
+            <if test="f007d0007 != null">F007D_0007 = #{f007d0007},</if>
+            <if test="f008d0007 != null">F008D_0007 = #{f008d0007},</if>
+            <if test="f009n0007 != null">F009N_0007 = #{f009n0007},</if>
+            <if test="f012v0007 != null">F012V_0007 = #{f012v0007},</if>
+            <if test="f013v0007 != null">F013V_0007 = #{f013v0007},</if>
+            <if test="f014v0007 != null">F014V_0007 = #{f014v0007},</if>
+            <if test="f015v0007 != null">F015V_0007 = #{f015v0007},</if>
+            <if test="f017v0007 != null">F017V_0007 = #{f017v0007},</if>
+            <if test="f018v0007 != null">F018V_0007 = #{f018v0007},</if>
+            <if test="obMemo0007 != null">OB_MEMO_0007 = #{obMemo0007},</if>
+            <if test="obModtime0007 != null">OB_MODTIME_0007 = #{obModtime0007},</if>
+            <if test="obRectime0007 != null">OB_RECTIME_0007 = #{obRectime0007},</if>
+            <if test="obIsvalid0007 != null">OB_ISVALID_0007 = #{obIsvalid0007},</if>
+            <if test="obObjectId != null">OB_OBJECT_ID = #{obObjectId},</if>
+            <if test="obSeqId != null">OB_SEQ_ID = #{obSeqId},</if>
+            <if test="f019n0007 != null">F019N_0007 = #{f019n0007},</if>
+            <if test="f020v0007 != null">F020V_0007 = #{f020v0007},</if>
+            <if test="f021v0007 != null">F021V_0007 = #{f021v0007},</if>
+            <if test="f022v0007 != null">F022V_0007 = #{f022v0007},</if>
+            <if test="f023c0007 != null">F023C_0007 = #{f023c0007},</if>
+            <if test="f024v0007 != null">F024V_0007 = #{f024v0007},</if>
+            <if test="f025v0007 != null">F025V_0007 = #{f025v0007},</if>
+        </set>
+        WHERE OB_SECID_0007 = #{obSecid0007}
+          AND OB_SECCODE_0007 = #{obSeccode0007}
+          AND F002V_0007 = #{f002v0007}
+          AND F005V_0007 = #{f005v0007}
+    </update>
+
+    <delete id="deleteByKey">
+        DELETE FROM tb_public_0007
+        WHERE OB_SECID_0007 = #{obSecid0007}
+          AND OB_SECCODE_0007 = #{obSeccode0007}
+          AND F002V_0007 = #{f002v0007}
+          AND F005V_0007 = #{f005v0007}
+    </delete>
+
+</mapper>

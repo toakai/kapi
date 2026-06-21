@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.p5w.dp.module.spriderx.mapper.StockstarDocumentMapper">
+
+    <!-- ==================== 通用列名 ==================== -->
+    <sql id="baseColumns">
+        id, channelid, title, guid, link, category, content,
+        source, author, keywords, pubDate, stockcode, status, remark,
+        gmt_create, gmt_modified
+    </sql>
+
+    <!-- ==================== 通用查询条件 ==================== -->
+    <sql id="queryWhere">
+        <where>
+            <if test="query.title != null and query.title != ''">
+                AND title LIKE CONCAT('%', #{query.title}, '%')
+            </if>
+            <if test="query.source != null and query.source != ''">
+                AND source = #{query.source}
+            </if>
+            <if test="query.author != null and query.author != ''">
+                AND author = #{query.author}
+            </if>
+            <if test="query.stockcode != null and query.stockcode != ''">
+                AND stockcode LIKE CONCAT('%', #{query.stockcode}, '%')
+            </if>
+            <if test="query.status != null">
+                AND status = #{query.status}
+            </if>
+        </where>
+    </sql>
+
+    <!-- ==================== 分页查询 ==================== -->
+    <select id="selectPage" resultType="net.p5w.dp.module.spriderx.entity.StockstarDocument">
+        SELECT <include refid="baseColumns"/>
+        FROM tb_stockstar_document
+        <include refid="queryWhere"/>
+        ORDER BY id DESC
+    </select>
+
+    <!-- ==================== 根据 ID 查询 ==================== -->
+    <select id="selectById" resultType="net.p5w.dp.module.spriderx.entity.StockstarDocument">
+        SELECT <include refid="baseColumns"/>
+        FROM tb_stockstar_document
+        WHERE id = #{id}
+    </select>
+
+    <!-- ==================== 新增 ==================== -->
+    <insert id="insert" parameterType="net.p5w.dp.module.spriderx.entity.StockstarDocument"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO tb_stockstar_document (
+            channelid, title, guid, link, category, content,
+            source, author, keywords, pubDate, stockcode, status, remark,
+            gmt_create, gmt_modified
+        ) VALUES (
+            #{channelid}, #{title}, #{guid}, #{link}, #{category}, #{content},
+            #{source}, #{author}, #{keywords}, #{pubDate}, #{stockcode}, #{status}, #{remark},
+            NOW(), NOW()
+        )
+    </insert>
+
+    <!-- ==================== 根据 ID 更新 ==================== -->
+    <update id="updateById" parameterType="net.p5w.dp.module.spriderx.entity.StockstarDocument">
+        UPDATE tb_stockstar_document
+        <set>
+            <if test="channelid != null">channelid = #{channelid},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="guid != null">guid = #{guid},</if>
+            <if test="link != null">link = #{link},</if>
+            <if test="category != null">category = #{category},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="source != null">source = #{source},</if>
+            <if test="author != null">author = #{author},</if>
+            <if test="keywords != null">keywords = #{keywords},</if>
+            <if test="pubDate != null">pubDate = #{pubDate},</if>
+            <if test="stockcode != null">stockcode = #{stockcode},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            gmt_modified = NOW()
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- ==================== 根据 ID 删除 ==================== -->
+    <delete id="deleteById">
+        DELETE FROM tb_stockstar_document WHERE id = #{id}
+    </delete>
+
+    <!-- ==================== 关联查询：JOIN tb_company_baseinfo ==================== -->
+    <select id="selectJoinPage" resultType="net.p5w.dp.module.spriderx.entity.StockstarDocumentVO">
+        SELECT
+            d.id            AS docId,
+            d.channelid,
+            d.title,
+            d.guid,
+            d.link,
+            d.category,
+            d.content,
+            d.source,
+            d.author,
+            d.keywords,
+            d.pubDate,
+            d.stockcode,
+            d.status,
+            d.remark,
+            d.gmt_create     AS gmtCreate,
+            d.gmt_modified   AS gmtModified,
+            c.id             AS companyId,
+            c.pid,
+            c.company_code   AS companyCode,
+            c.company_name   AS companyName,
+            c.jurisdiction,
+            c.platformName
+        FROM tb_stockstar_document d
+        LEFT JOIN tb_company_baseinfo c
+            ON FIND_IN_SET(c.company_code, d.stockcode) > 0
+        <where>
+            <if test="query.title != null and query.title != ''">
+                AND d.title LIKE CONCAT('%', #{query.title}, '%')
+            </if>
+            <if test="query.source != null and query.source != ''">
+                AND d.source = #{query.source}
+            </if>
+            <if test="query.author != null and query.author != ''">
+                AND d.author = #{query.author}
+            </if>
+            <if test="query.stockcode != null and query.stockcode != ''">
+                AND d.stockcode LIKE CONCAT('%', #{query.stockcode}, '%')
+            </if>
+            <if test="query.status != null">
+                AND d.status = #{query.status}
+            </if>
+        </where>
+        ORDER BY d.id DESC
+    </select>
+
+</mapper>

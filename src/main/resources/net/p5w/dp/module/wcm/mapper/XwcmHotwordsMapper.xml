@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.p5w.dp.module.wcm.mapper.XwcmHotwordsMapper">
+
+    <sql id="baseColumns">
+        HOTWORDSID, HOTWORDS, SUBSTITUTEURI, INSTRUT, WORDSTYPE,
+        CrUser, CrTime, ISWORDSGROUP, TENANTID, ISOK,
+        STOCKCODE, RESERVEDTHREE, aTagAttribute
+    </sql>
+
+    <sql id="queryWhere">
+        <where>
+            <if test="query.hotwords != null and query.hotwords != ''">
+                AND HOTWORDS LIKE CONCAT('%', #{query.hotwords}, '%')
+            </if>
+            <if test="query.stockcode != null and query.stockcode != ''">
+                AND STOCKCODE = #{query.stockcode}
+            </if>
+            <if test="query.isok != null">
+                AND ISOK = #{query.isok}
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectPage" resultType="net.p5w.dp.module.wcm.entity.XwcmHotwords">
+        SELECT <include refid="baseColumns"/>
+        FROM xwcmhotwords
+        <include refid="queryWhere"/>
+        ORDER BY HOTWORDSID DESC
+    </select>
+
+    <select id="selectById" resultType="net.p5w.dp.module.wcm.entity.XwcmHotwords">
+        SELECT <include refid="baseColumns"/>
+        FROM xwcmhotwords
+        WHERE HOTWORDSID = #{hotwordsid}
+    </select>
+
+    <insert id="insert" parameterType="net.p5w.dp.module.wcm.entity.XwcmHotwords"
+            useGeneratedKeys="true" keyProperty="hotwordsid">
+        INSERT INTO xwcmhotwords (
+            HOTWORDS, SUBSTITUTEURI, INSTRUT, WORDSTYPE,
+            CrUser, CrTime, ISWORDSGROUP, TENANTID, ISOK,
+            STOCKCODE, RESERVEDTHREE, aTagAttribute
+        ) VALUES (
+            #{hotwords}, #{substituteuri}, #{instrut}, #{wordstype},
+            #{crUser}, #{crTime}, #{iswordsgroup}, #{tenantid}, #{isok},
+            #{stockcode}, #{reservedthree}, #{atagattribute}
+        )
+    </insert>
+
+    <update id="updateById" parameterType="net.p5w.dp.module.wcm.entity.XwcmHotwords">
+        UPDATE xwcmhotwords
+        <set>
+            <if test="hotwords != null">HOTWORDS = #{hotwords},</if>
+            <if test="substituteuri != null">SUBSTITUTEURI = #{substituteuri},</if>
+            <if test="instrut != null">INSTRUT = #{instrut},</if>
+            <if test="wordstype != null">WORDSTYPE = #{wordstype},</if>
+            <if test="crUser != null">CrUser = #{crUser},</if>
+            <if test="crTime != null">CrTime = #{crTime},</if>
+            <if test="iswordsgroup != null">ISWORDSGROUP = #{iswordsgroup},</if>
+            <if test="tenantid != null">TENANTID = #{tenantid},</if>
+            <if test="isok != null">ISOK = #{isok},</if>
+            <if test="stockcode != null">STOCKCODE = #{stockcode},</if>
+            <if test="reservedthree != null">RESERVEDTHREE = #{reservedthree},</if>
+            <if test="atagattribute != null">aTagAttribute = #{atagattribute},</if>
+        </set>
+        WHERE HOTWORDSID = #{hotwordsid}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM xwcmhotwords WHERE HOTWORDSID = #{hotwordsid}
+    </delete>
+
+</mapper>

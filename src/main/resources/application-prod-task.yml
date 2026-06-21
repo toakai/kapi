@@ -1,0 +1,94 @@
+jobs:
+  lanjinger:
+    rssUrl: 'https://rss.lanjinger.com/lj/article/mediacopyright' # 蓝鲸财经提供的rss接口地址
+    timeout: 60000 # 超时时间
+    channel: '8495' # TRS栏目ID
+    schedule: 0 0/5 * * * ? # 5分钟一次
+    docSource: -1 # TRS文档来源 没有来源ID时用来源名称，二者都有时以ID优先，来源ID为-1表示无对应的来源ID
+    docStatus: 16 # TRS info : 1 - new draft, 16 - checked
+    mlfDocType: 1 # TRS文档类型 新闻=1,图集=2,专题=3,链接新闻=4,活动=5,话题=6,视频=7,直播=8,音频=9
+    isPublish: 1 # 是否签发稿件 0：不签发，1：签发
+    outDay: -10 # 去重天数范围，-10 前10天
+    open: true # 是否开启蓝鲸财经资讯抽取
+    userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36'
+  tianyan:
+    rssUrl: 'https://www.tianyancha.com/rss/rss.xml' # 天眼查提供的rss接口地址
+    timeout: 60000 # 超时时间
+    channel: '8487' # TRS栏目ID
+    schedule: 0 1/5 * * * ? # 5分钟一次
+    docSource: '天眼查' # TRS文档来源名称
+    mlfDocType: 1 # TRS文档类型 新闻=1,图集=2,专题=3,链接新闻=4,活动=5,话题=6,视频=7,直播=8,音频=9
+    isPublish: 1 # 是否签发稿件 0：不签发，1：签发
+    outDay: -10 # 去重天数范围，-10 前10天
+    open: false # 是否开启天眼查资讯抽取
+    userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36'
+  stockstar:
+    rssUrl:
+      - 'https://app.stockstar.com/data/news/p5w/rss.xml' # 证券之星提供的rss接口地址
+      - 'https://app.stockstar.com/data/news/p5w_1/rss.xml' # 证券之星提供的rss接口地址
+    category:
+      - 'p5w'
+      - 'p5w_1'
+    timeout: 60000 # 超时时间
+    channel:
+      - '8490' # TRS栏目ID
+      - '8490' # TRS栏目ID
+    schedule1: 0 2/5 * * * ? # 5分钟一次
+    schedule2: 0 3/5 * * * ? # 5分钟一次
+    docSource: '证券之星' # TRS文档来源名称
+    mlfDocType: 1 # TRS文档类型 新闻=1,图集=2,专题=3,链接新闻=4,活动=5,话题=6,视频=7,直播=8,音频=9
+    isPublish:
+      - 1 # 是否签发稿件 0：不签发，1：签发
+      - 1 # 是否签发稿件 0：不签发，1：签发
+    outDay: -20 # 去重天数范围，-10 前10天
+    open:
+      - false # 是否开启证券之星抽取
+      - false # 是否开启证券之星抽取
+    userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36'
+  popcj:
+    rssUrl: 'https://www.popcj.com/stock' # 泡财经地址
+    timeout: 60000 # 超时时间
+    channel: '8492' # TRS栏目ID
+    schedule: 0 4/5 * * * ? # 5分钟一次
+    docSource: '泡财经' # TRS文档来源名称
+    mlfDocType: 1 # TRS文档类型 新闻=1,图集=2,专题=3,链接新闻=4,活动=5,话题=6,视频=7,直播=8,音频=9
+    isPublish: 1 # 是否签发稿件 0：不签发，1：签发
+    outDay: -10 # 去重天数范围，-10 前10天
+    open: false # 是否开启天眼查资讯抽取
+    userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36'
+  stcn:
+    rssUrl: http://xinpi.stcn.com/rss/stcn_news_qj.xml # 时报提供的rss接口地址
+    timeout: 60000 # 超时时间
+    channels:
+      - '1财经|1781'
+      - '1公司|1783'
+      - '1公司动态|1784'
+      - '1公司新闻|1789'
+      - '1机构|1791'
+      - '1基金|1792'
+      - 'others|1792'
+    noPublishChannel: 1792
+    schedule: 0 0/5 * * * ? # 1分钟一次
+    docSource: -1 # TRS文档来源 没有来源ID时用来源名称，二者都有时以ID优先，来源ID为-1表示无对应的来源ID
+    docStatus: 16 # TRS info : 1 - new draft, 16 - checked
+    docType: 20 # TRS文档类型 文本文档=10,HTML文档=20,链接文档=30,外部文件文档=40
+    mlfDocType: 1 # TRS文档类型 新闻=1,图集=2,专题=3,链接新闻=4,活动=5,话题=6,视频=7,直播=8,音频=9
+    open: false #是否开启时报资讯抽取
+  sync-company:
+    time: 0 0/1 * * * ?  # 每天9点，23点执行
+    open: false #是否开启公司同步热词
+    day: 10 #同步最近的天数，默认10天
+  wind-esg:
+    listUrl: 'https://esg.wind.com.cn/esgWorkingTable/ratingNews/list' # Wind ESG列表接口地址
+    detailUrl: 'https://esg.wind.com.cn/esgWorkingTable/ratingNews/detail?id={id}' # Wind ESG详情接口地址（{id}为占位符）
+    timeout: 60000 # HTTP请求超时时间（毫秒）
+    pageSize: 20 # 每页条数
+    maxPageLimit: 500 # 最大翻页限制，防止无限翻页
+    stopOnDuplicatePages: 2 # 连续整页重复多少页后停止翻页，默认1（单页即停），设为2则需连续2页全重复才停
+    outDay: -30 # 去重天数范围，-30往前推30天
+    schedule: 0 30 * * * ? # 每10分钟一次
+    open: true # 是否开启Wind ESG报告爬取
+    userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36'
+    channel: '8496' # MLF推送栏目ID（留空则不推送MLF）
+    docSource: 'Wind ESG' # TRS文档来源名称
+    isPublish: 0 # 是否签发稿件到MLF（0=不签发，1=签发）
