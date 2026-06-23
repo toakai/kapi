@@ -1,7 +1,7 @@
 spring:
   datasource:
     dynamic:
-      primary: dpo-data-source
+      primary: spriderx-data-source
       datasource:
         spriderx-data-source:
           type: com.alibaba.druid.pool.DruidDataSource
