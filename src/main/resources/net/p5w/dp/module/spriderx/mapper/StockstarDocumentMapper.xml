@@ -2,6 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.p5w.dp.module.spriderx.mapper.StockstarDocumentMapper">
 
+    <!-- ==================== 结果映射 ==================== -->
+    <resultMap id="BaseResultMap" type="net.p5w.dp.module.spriderx.entity.StockstarDocument">
+        <id column="id" property="id"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
+    </resultMap>
+
     <!-- ==================== 通用列名 ==================== -->
     <sql id="baseColumns">
         id, channelid, title, guid, link, category, content,
@@ -31,7 +38,7 @@
     </sql>
 
     <!-- ==================== 分页查询 ==================== -->
-    <select id="selectPage" resultType="net.p5w.dp.module.spriderx.entity.StockstarDocument">
+    <select id="selectPage" resultMap="BaseResultMap">
         SELECT <include refid="baseColumns"/>
         FROM tb_stockstar_document
         <include refid="queryWhere"/>
@@ -39,7 +46,7 @@
     </select>
 
     <!-- ==================== 根据 ID 查询 ==================== -->
-    <select id="selectById" resultType="net.p5w.dp.module.spriderx.entity.StockstarDocument">
+    <select id="selectById" resultMap="BaseResultMap">
         SELECT <include refid="baseColumns"/>
         FROM tb_stockstar_document
         WHERE id = #{id}

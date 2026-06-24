@@ -2,10 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.p5w.dp.module.spriderx.mapper.CompanyBaseinfoMapper">
 
+    <!-- ==================== 结果映射 ==================== -->
+    <resultMap id="BaseResultMap" type="net.p5w.dp.module.spriderx.entity.CompanyBaseinfo">
+        <id column="id" property="id"/>
+        <result column="pid" property="pid"/>
+        <result column="company_code" property="companyCode"/>
+        <result column="company_name" property="companyName"/>
+        <result column="jurisdiction" property="jurisdiction"/>
+        <result column="platformName" property="platformName"/>
+    </resultMap>
+
+    <!-- ==================== 通用列名 ==================== -->
     <sql id="baseColumns">
         id, pid, company_code, company_name, jurisdiction, platformName
     </sql>
 
+    <!-- ==================== 通用查询条件 ==================== -->
     <sql id="queryWhere">
         <where>
             <if test="query.companyName != null and query.companyName != ''">
@@ -17,25 +29,29 @@
         </where>
     </sql>
 
-    <select id="selectPage" resultType="net.p5w.dp.module.spriderx.entity.CompanyBaseinfo">
+    <!-- ==================== 分页查询 ==================== -->
+    <select id="selectPage" resultMap="BaseResultMap">
         SELECT <include refid="baseColumns"/>
         FROM tb_company_baseinfo
         <include refid="queryWhere"/>
         ORDER BY id DESC
     </select>
 
-    <select id="selectById" resultType="net.p5w.dp.module.spriderx.entity.CompanyBaseinfo">
+    <!-- ==================== 根据 ID 查询 ==================== -->
+    <select id="selectById" resultMap="BaseResultMap">
         SELECT <include refid="baseColumns"/>
         FROM tb_company_baseinfo
         WHERE id = #{id}
     </select>
 
+    <!-- ==================== 新增 ==================== -->
     <insert id="insert" parameterType="net.p5w.dp.module.spriderx.entity.CompanyBaseinfo"
             useGeneratedKeys="true" keyProperty="id">
         INSERT INTO tb_company_baseinfo (pid, company_code, company_name, jurisdiction, platformName)
         VALUES (#{pid}, #{companyCode}, #{companyName}, #{jurisdiction}, #{platformName})
     </insert>
 
+    <!-- ==================== 根据 ID 更新 ==================== -->
     <update id="updateById" parameterType="net.p5w.dp.module.spriderx.entity.CompanyBaseinfo">
         UPDATE tb_company_baseinfo
         <set>
@@ -48,6 +64,7 @@
         WHERE id = #{id}
     </update>
 
+    <!-- ==================== 根据 ID 删除 ==================== -->
     <delete id="deleteById">
         DELETE FROM tb_company_baseinfo WHERE id = #{id}
     </delete>

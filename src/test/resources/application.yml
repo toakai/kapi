@@ -1,0 +1,15 @@
+spring:
+  profiles:
+    active: dev
+  config:
+    import:
+      - optional:classpath:application-dev-db.yml
+
+mybatis:
+  mapper-locations:
+    - classpath:net/p5w/dp/module/**/*.xml
+
+logging:
+  level:
+    org.mybatis: INFO
+    org.apache.ibatis: INFO

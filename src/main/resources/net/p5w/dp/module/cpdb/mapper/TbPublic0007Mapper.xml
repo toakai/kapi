@@ -2,6 +2,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.p5w.dp.module.cpdb.mapper.TbPublic0007Mapper">
 
+    <!-- ==================== 结果映射 ==================== -->
+    <resultMap id="BaseResultMap" type="net.p5w.dp.module.cpdb.entity.TbPublic0007">
+        <id column="OB_SECID_0007" property="obSecid0007"/>
+        <id column="OB_SECCODE_0007" property="obSeccode0007"/>
+        <id column="F002V_0007" property="f002v0007"/>
+        <id column="F005V_0007" property="f005v0007"/>
+        <result column="OB_SECNAME_0007" property="obSecname0007"/>
+        <result column="F001V_0007" property="f001v0007"/>
+        <result column="F016V_0007" property="f016v0007"/>
+        <result column="F003V_0007" property="f003v0007"/>
+        <result column="F006V_0007" property="f006v0007"/>
+        <result column="F007D_0007" property="f007d0007"/>
+        <result column="F008D_0007" property="f008d0007"/>
+        <result column="F009N_0007" property="f009n0007"/>
+        <result column="F012V_0007" property="f012v0007"/>
+        <result column="F013V_0007" property="f013v0007"/>
+        <result column="F014V_0007" property="f014v0007"/>
+        <result column="F015V_0007" property="f015v0007"/>
+        <result column="F017V_0007" property="f017v0007"/>
+        <result column="F018V_0007" property="f018v0007"/>
+        <result column="OB_MEMO_0007" property="obMemo0007"/>
+        <result column="OB_MODTIME_0007" property="obModtime0007"/>
+        <result column="OB_RECTIME_0007" property="obRectime0007"/>
+        <result column="OB_ISVALID_0007" property="obIsvalid0007"/>
+        <result column="OB_OBJECT_ID" property="obObjectId"/>
+        <result column="OB_SEQ_ID" property="obSeqId"/>
+        <result column="F019N_0007" property="f019n0007"/>
+        <result column="F020V_0007" property="f020v0007"/>
+        <result column="F021V_0007" property="f021v0007"/>
+        <result column="F022V_0007" property="f022v0007"/>
+        <result column="F023C_0007" property="f023c0007"/>
+        <result column="F024V_0007" property="f024v0007"/>
+        <result column="F025V_0007" property="f025v0007"/>
+    </resultMap>
+
     <sql id="baseColumns">
         OB_SECID_0007, OB_SECCODE_0007, OB_SECNAME_0007,
         F001V_0007, F016V_0007, F002V_0007, F003V_0007,
@@ -27,14 +62,14 @@
         </where>
     </sql>
 
-    <select id="selectPage" resultType="net.p5w.dp.module.cpdb.entity.TbPublic0007">
+    <select id="selectPage" resultMap="BaseResultMap">
         SELECT <include refid="baseColumns"/>
         FROM tb_public_0007
         <include refid="queryWhere"/>
         ORDER BY OB_RECTIME_0007 DESC
     </select>
 
-    <select id="selectByKey" resultType="net.p5w.dp.module.cpdb.entity.TbPublic0007">
+    <select id="selectByKey" resultMap="BaseResultMap">
         SELECT <include refid="baseColumns"/>
         FROM tb_public_0007
         WHERE OB_SECID_0007 = #{obSecid0007}
