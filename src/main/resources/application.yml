@@ -4,15 +4,9 @@ spring:
   config:
     import:
       - optional:classpath:application-@profiles.active@-db.yml
-      - optional:file:config/application-@profiles.active@-db.yml
-
-#spring:
-#  profiles:
-#    active: ${spring.profiles.active:dev}
-#  config:
-#    import:
-#      - optional:classpath:application-${spring.profiles.active:dev}-db.yml
-#      - optional:file:config/application-${spring.profiles.active:dev}-db.yml
+      - optional:classpath:application-@profiles.active@-task.yml
+      - optional:file:config/application-db.yml
+      - optional:file:config/application-task.yml
 
 mybatis:
   mapper-locations:

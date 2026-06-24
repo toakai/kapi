@@ -319,6 +319,13 @@
                                 <copy todir="${output.dir}/config">
                                     <fileset dir="${project.build.directory}/resources" />
                                 </copy>
+                                <!-- 重命名：去除 profile 前缀（application-prod-db.yml → application-db.yml） -->
+                                <move todir="${output.dir}/config">
+                                    <fileset dir="${output.dir}/config">
+                                        <include name="application-${env}-*.yml"/>
+                                    </fileset>
+                                    <mapper type="regexp" from="^application-${env}-(.*)$$" to="application-\1"/>
+                                </move>
                             </target>
                         </configuration>
                         <goals>

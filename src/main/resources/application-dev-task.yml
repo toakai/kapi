@@ -1,3 +1,6 @@
+server:
+  port: 8081
+
 jobs:
   lanjinger:
     rssUrl: 'https://rss.lanjinger.com/lj/article/mediacopyright' # 蓝鲸财经提供的rss接口地址
